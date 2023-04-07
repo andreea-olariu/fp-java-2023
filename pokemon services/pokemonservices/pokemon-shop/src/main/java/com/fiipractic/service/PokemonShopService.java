@@ -51,4 +51,9 @@ public class PokemonShopService {
         Pokedex pokemon = pokemons[0];
         return new Pokemon(pokemon.getId(), pokemon.getName(), pokemon.getBaseTotal(), pokemon.getBaseEggSteps());
     }
+
+    public void saveUser(AppUser user) {
+        if(userRepository.findAppUserByUsername(user.getUsername()) == null)
+            userRepository.save(user);
+    }
 }

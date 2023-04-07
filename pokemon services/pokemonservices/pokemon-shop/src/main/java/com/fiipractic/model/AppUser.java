@@ -1,19 +1,18 @@
 package com.fiipractic.model;
 import jakarta.persistence.*;
 
+import java.util.Random;
+import java.util.UUID;
+
 @Entity
 @Table(name="users")
 public class AppUser {
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String username;
     private Integer money;
 
-    public AppUser(Integer id, String username, Integer money) {
-        this.id = id;
-        this.username = username;
-        this.money = money;
-    }
     public AppUser(String username, Integer money) {
         this.username = username;
         this.money = money;
@@ -21,17 +20,18 @@ public class AppUser {
 
     public AppUser(String username) {
         this.username = username;
-        this.money = 500;
     }
 
     public AppUser() {
+        Random random = new Random();
+        this.money = random.nextInt(0, 501);
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -50,8 +50,6 @@ public class AppUser {
     public void setMoney(Integer money) {
         this.money = money;
     }
-
-
 
     @Override
     public String toString() {

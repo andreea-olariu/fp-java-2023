@@ -17,12 +17,12 @@ public class PokemonShopConfiguration implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        AppUser user1 = new AppUser(1, "andreea", 1000);
-        AppUser user2 = new AppUser(2, "linux", 1900);
-        AppUser user3 = new AppUser(3, "persi", 500);
-        AppUser user4 = new AppUser(4, "pisic", 700);
-        AppUser user5 = new AppUser(5, "test", 500);
-        AppUser user6 = new AppUser(6, "cartofel", 70);
-        userRepository.saveAll(List.of(user1, user2, user3, user4, user5, user6));
+//        AppUser user1 = new AppUser("andreea", 1000);
+//        AppUser user2 = new AppUser( "linux", 1900);
+//        AppUser user3 = new AppUser("persi", 500);
+//        AppUser user4 = new AppUser( "pisic", 700);
+//        AppUser user5 = new AppUser( "test", 500);
+//        AppUser user6 = new AppUser("cartofel", 70);
+//        userRepository.saveAll(List.of(user1, user2, user3, user4, user5, user6));
     }
 }

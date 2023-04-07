@@ -25,6 +25,20 @@ public class PokemonShopController {
         return "pokemon-shop-home";
     }
 
+    @GetMapping(value="/registerpage")
+    public String register(Model model) {
+        model.addAttribute("appUser", new AppUser());
+        return "register-page";
+    }
+
+    @PostMapping(value="/register")
+    public String register(@ModelAttribute AppUser appUser, Model model) {
+        System.out.println(appUser);
+        pokemonShopService.saveUser(appUser);
+        model.addAttribute("appUser", new AppUser());
+        return "pokemon-shop-home";
+    }
+
     @PostMapping(value="/buy")
     public String buyPokemon(@ModelAttribute BuyPokemonForm buyPokemon, Model model) {
         try {
