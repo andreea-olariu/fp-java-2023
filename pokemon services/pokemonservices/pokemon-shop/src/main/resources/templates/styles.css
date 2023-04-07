@@ -1,0 +1,39 @@
+#app-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.pokemon-logo {
+    width: 350px;
+}
+
+.pokemon-image {
+    width: 350px;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    min-height: 200px;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 10px;
+    box-shadow: 10px 5px 5px grey;
+    border-radius: 10px;
+    padding: 10px 20px;
+    background-color: #fdfdf2;
+}
+
+#pokemons-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.solid {
+    border-top: 1.5px solid darkgrey;
+    width: 100%;
+}
+

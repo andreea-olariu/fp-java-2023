@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+
+    <style>
+        #app-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pokemon-logo {
+            width: 350px;
+        }
+
+        .coin {
+            width: 100px;
+        }
+
+        .coin-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            color: white;
+        }
+
+        .pokemon-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+            margin-top: 30px;
+            width: 40%;
+        }
+
+        #pokemons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            min-height: 80vh;
+        }
+        .pokemon-name {
+            text-align: center;
+        }
+    </style>
+
+    <title>Pokemon shop</title>
+</head>
+<body>
+
+<div id="app-wrapper">
+    <div id="logo-wrapper">
+        <img class="pokemon-logo" th:src="@{/pokemon_logo.png}" />
+    </div>
+
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onclick="(() => {history.back();})()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </button>
+
+
+    <form th:action="@{/buy}" th:object="${buyPokemon}" method="post">
+        <div class="relative mt-2 rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <span class="text-gray-500 sm:text-sm"><i class="fa fa-user" aria-hidden="true"></i>
+                </span>
+            </div>
+            <input readonly="readonly" th:value="${username}" required type="text" name="customerUsername"
+                   class="block w-full h-18 rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+        </div>
+
+
+        <h3 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-black">
+            You have
+            <span id="money-left" class="money" th:text="${money}"></span>
+            coins.<i class="fa-solid fa-coins"></i></h3>
+
+        <div id="pokemons-container">
+            <div class="pokemon-container bg-white center rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                    th:each="pokemon: ${pokemons}">
+                <div class="flex flex-col items-center pb-10">
+                    <input th:id="#{input.text(${pokemon.id})}"
+                           class="pokemon-name w-full mb-4 text-4xl font-extrabold leading-none tracking-tight text-white-900 md:text-5xl lg:text-6xl dark:text-gray"
+                           readonly="readonly" type="text"
+                           th:value="${pokemon.name}"/>
+                    <hr class="solid"/>
+                    <img class="w-24 h-24 mb-3 rounded-full shadow-lg"
+                         th:src="@{'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + ${pokemon.id} + '.png'}"
+                         alt="Pokemon"/>
+                    <div class="coin-wrapper">
+                        <img class="coin" th:src="@{/coins.png}"/>
+                        <div th:text="${pokemon.baseTotal / 10}" th:id="#{coins.text(${pokemon.id})}"></div>
+                    </div>
+                    <div class="flex mt-4 space-x-3 md:mt-6">
+                        <button type="submit" th:id="#{buyBtn.text(${pokemon.id})}"
+                                th:onclick="#{buyFunc.text(${pokemon.id})}"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Buy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert"
+         th:text="${alert}" th:if="${alert == 'User doesnt exist'}"></div>
+</div>
+</body>
+
+<script>
+    const moneyWrap = document.getElementById("money-left")
+
+    if(localStorage.getItem("money-left")) {
+        moneyWrap.innerText = localStorage.getItem("money-left")
+    }
+
+    const buyFunc = (id) => {
+        const pokemonsInput = Array.prototype.slice.call(document.getElementsByClassName("pokemon-name"));
+        pokemonsInput.forEach((poke) => {
+            if (poke.id === `input-${id}`) {
+                poke.setAttribute("name", "pokemonName")
+            }
+        })
+
+    }
+
+
+</script>
+</html>
